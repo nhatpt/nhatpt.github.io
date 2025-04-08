@@ -20,7 +20,6 @@ export default {
       // Do stuff with the received token.
       alert(token)
     }
-    recaptcha.hideBadge()
     return {
       recaptcha
     }
