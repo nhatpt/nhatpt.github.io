@@ -5,31 +5,34 @@
       <form class="contact-form row" @submit.prevent="calculate()">
         <div class="form-field col-lg-12">
           <input v-model="productItem.amount" id="amount" class="input-text js-input" type="number" required
-                 placeholder="Giá tiền bịch bánh Hiếu muốn mua">
+            placeholder="Giá tiền bịch bánh Hiếu muốn mua">
         </div>
         <div class="form-field col-lg-12 ">
           <input v-model="productItem.minAmount" id="minAmount" class="input-text js-input" type="number" required
-                 placeholder="Số tiền nhỏ nhất Hiếu cần trả để quán không bị ăn quỵt">
+            placeholder="Số tiền nhỏ nhất Hiếu cần trả để quán không bị ăn quỵt">
         </div>
         <div class="form-field col-lg-12">
           <input v-model="productItem.multiply" id="multiply" class="input-text js-input" type="number" required
-                 placeholder="Bội số để kiếm lời từ Hiếu">
+            placeholder="Bội số để kiếm lời từ Hiếu">
         </div>
         <div class="form-field col-lg-6 ">
           <input v-model="productItem.point" id="point" class="input-text js-input" type="number" required
-                 placeholder="Số tiền thừa mà quán thiếu Hiếu">
+            placeholder="Số tiền thừa mà quán thiếu Hiếu">
         </div>
         <div class="form-field col-lg-12 ">
           <input v-model="productItem.lps" id="lps" class="input-text js-input" type="number" required
-                 placeholder="Số tiền hoa hồng Hiếu gạ Tuấn mua hàng">
+            placeholder="Số tiền hoa hồng Hiếu gạ Tuấn mua hàng">
         </div>
         <div class="form-field col-lg-12">
           <input v-model="productItem.discount" id="discount" class="input-text js-input" type="text" required
-                 placeholder="Là thành viên trung thành, quán giảm giá cho Hiếu (%)">
+            placeholder="Là thành viên trung thành, quán giảm giá cho Hiếu (%)">
         </div>
         <div class="form-field col-lg-12">
           <input :disabled="isDisabled" class="submit-btn" type="submit" value="Submit" data-bs-toggle="modal"
-                 data-bs-target="#exampleModal">
+            data-bs-target="#exampleModal">
+          <form action="login">
+            <button @click="recaptcha">Execute recaptcha</button>
+          </form>
         </div>
       </form>
     </section>
@@ -43,12 +46,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="card shadow-lg" >
-                  <div class="row">
-                    <div class="col-12">
-                      <span>{{this.productItem.useLpsAmount}}</span>
-                    </div>
+              <div class="card shadow-lg">
+                <div class="row">
+                  <div class="col-12">
+                    <span>{{ this.productItem.useLpsAmount }}</span>
                   </div>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -62,18 +65,29 @@
 </template>
 
 <script>
+import { useReCaptcha } from 'vue-recaptcha-v3'
+
 export default {
   name: 'App',
   components: {},
+  setup() {
+    const reCaptcha = useReCaptcha();
+    const login = async () => {
+      await reCaptcha.recaptchaLoaded();
+      const token = await reCaptcha.executeRecaptcha('login');
+      console.log('token', token);
+    }
+    console.log(login)
+  },
   computed: {
     isDisabled() {
       return this.productItem.amount === null
-          || this.productItem.minAmount === null
-          || this.productItem.multiply === null
-          || this.productItem.point === null
-          || this.productItem.lps === null
-          || this.productItem.discount === null
-          ;
+        || this.productItem.minAmount === null
+        || this.productItem.multiply === null
+        || this.productItem.point === null
+        || this.productItem.lps === null
+        || this.productItem.discount === null
+        ;
     }
   },
   data: function () {
@@ -176,8 +190,8 @@ export default {
   outline: none;
 }
 
-.contact-form .input-text:focus + .label,
-.contact-form .input-text.not-empty + .label {
+.contact-form .input-text:focus+.label,
+.contact-form .input-text.not-empty+.label {
   -webkit-transform: translateY(-24px);
   transform: translateY(-24px);
 }
@@ -194,7 +208,7 @@ export default {
   transition: -webkit-transform .2s ease-in-out;
   transition: transform .2s ease-in-out;
   transition: transform .2s ease-in-out,
-  -webkit-transform .2s ease-in-out;
+    -webkit-transform .2s ease-in-out;
 }
 
 .contact-form .submit-btn {
@@ -214,5 +228,4 @@ export default {
 .submit-btn:disabled {
   color: #666;
 }
-
 </style>
