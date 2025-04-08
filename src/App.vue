@@ -18,7 +18,7 @@ export default {
       // Execute reCAPTCHA with action "login".
       const token = await executeRecaptcha('login')
       // Do stuff with the received token.
-      alert(token)
+      console.log(token)
     }
     return {
       recaptcha
