@@ -63,7 +63,7 @@ export default {
         }
 
         const newToken = await window.grecaptcha.enterprise.execute(siteKey.value, {
-          action: 'generate_token'
+          action: 'create_order'
         })
         token.value = newToken
       } catch (error) {
