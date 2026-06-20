@@ -1,0 +1,180 @@
+/* =========================================================
+   Global design tokens — ported from the "Terminal" prototype.
+   Component-specific styling lives in each .vue <style scoped>.
+   ========================================================= */
+:root {
+  --bg: #10162a; /* deep ink navy */
+  --surface: #161e38; /* panel */
+  --terminal: #0c1222;
+  --chrome: #131b30;
+  --card: #121a30;
+  --text: #e7ecf5;
+  --muted: #8a93a8;
+  --line: #263150;
+  --coral: #ff7a59; /* primary accent (warm) */
+  --coral-hover: #ff8c70;
+  --gold: #ffc368; /* secondary accent (soft gold) */
+
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --maxw: 1000px;
+  --pad: clamp(18px, 4vw, 32px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  color: var(--text);
+  background:
+    radial-gradient(
+      1200px 600px at 80% -10%,
+      rgba(255, 122, 89, 0.1),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at -10% 10%,
+      rgba(255, 195, 104, 0.07),
+      transparent 55%
+    ),
+    var(--bg);
+  background-attachment: fixed;
+  min-height: 100vh;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: clamp(15px, 1.4vw, 16px);
+}
+
+a {
+  color: var(--coral);
+}
+
+/* Visible keyboard focus (safe against the dark background) */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Shared layout wrapper ---------- */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(20px, 5vw, 56px) clamp(16px, 4vw, 28px) 64px;
+}
+
+/* ---------- Shared buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  padding: 11px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn--primary {
+  background: var(--coral);
+  color: #2a0e05;
+  border-color: var(--coral);
+}
+.btn--primary:hover {
+  background: var(--coral-hover);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line);
+}
+.btn--ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ---------- Shared panel ---------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  margin-top: clamp(20px, 3.5vw, 28px);
+}
+.panel__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+.panel__tag {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--coral);
+  letter-spacing: 0.3px;
+  flex: 0 0 auto;
+}
+.panel__title {
+  font-family: var(--mono);
+  font-size: clamp(1.05rem, 3vw, 1.2rem);
+  font-weight: 700;
+  margin: 0;
+  color: var(--text);
+}
+
+/* ---------- Reusable chips / tags ---------- */
+.chip {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  padding: 6px 11px;
+  border-radius: 999px;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--gold);
+  border: 1px solid rgba(255, 195, 104, 0.3);
+  background: rgba(255, 195, 104, 0.06);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .btn {
+    transition: none;
+  }
+}
